@@ -10,8 +10,11 @@ class Character(pygame.sprite.Sprite):
         super().__init__()
         self.screen = bf_game.screen
         self.screen_rect = bf_game.screen.get_rect()
-        self.settings = settings
+        self.settings = bf_game.settings
         self.moving_right = False
+        self.moving_left = False
+        self.moving_up = False
+        self.moving_down = False
 
         # Load animations from spritesheet if provided
         if spritesheet:
@@ -32,6 +35,7 @@ class Character(pygame.sprite.Sprite):
             self.image = pygame.Surface((32, 32))  # Default placeholder
             self.image.fill((255, 0, 255))  # Magenta for visibility
             self.rect = self.screen_rect.copy()
+            self.x = float(self.rect.x)
 
         # Movement settings
         self.speed = self.settings.player_speed
@@ -39,8 +43,14 @@ class Character(pygame.sprite.Sprite):
 
     def update(self, keys):
         """Update character position and animation."""
-        if self.moving_right:
-            self.rect.x += 1
+        if keys[pygame.K_RIGHT]:
+            self.rect.x += self.speed
+        if keys[pygame.K_LEFT]:
+            self.rect.x -= self.speed
+        if keys[pygame.K_UP]:
+            self.rect.y -= self.speed
+        if keys[pygame.K_DOWN]:
+            self.rect.y += self.speed
 
         # Set animation state
         #self.current_animation = "walk" if self.moving else "idle"
