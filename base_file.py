@@ -29,16 +29,8 @@ class BaseFile:
         def run_game(self):
                 """Start the main loop for the game"""
                 while True:
-                        # Watch for keyboard and mouse events.
-
-                        # Redraw the screen during each pass through the loop
-                        self.screen.fill(self.settings.bg_color)
-
-                        # Draw the character
-                        self.character.blitme()
-                        
-                        # Make the most recently drawn screen visible.
-                        pygame.display.flip()
+                        self._check_events()
+                        self._update_screen()
                         self.clock.tick(60)
 
         def _check_events(self):
@@ -49,6 +41,22 @@ class BaseFile:
                         elif event.type == pygame.KEYDOWN:
                                 if event.key == pygame.K_RIGHT:
                                         self.character.rect.x +=1
+                        elif event.type == pygame.KEYDOWN:
+                                if event.key == pygame.K_LEFT:
+                                        self.character.rect.x -= 1
+                        elif event.type == pygame.KEYDOWN:
+                                if event.key == pygame.K_UP:
+                                        self.character.rect.y += 1
+                        elif event.type == pygame.KEYDOWN:
+                                if event.key == pygame.K_DOWN:
+                                        self.character.rect.y += 1
+
+        def _update_screen(self):
+                """Update images on the screen, and flip to the new screen"""
+                self.screen.fill(self.settings.bg_color)
+                self.character.blitme()
+
+                pygame.display.flip()
 
 if __name__ == '__main__':
         # Make a game instance, and run the game
