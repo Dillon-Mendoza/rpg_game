@@ -30,6 +30,7 @@ class BaseFile:
                 """Start the main loop for the game"""
                 while True:
                         self._check_events()
+                        self.character.update(self.character)
                         self._update_screen()
                         self.clock.tick(60)
 
@@ -40,16 +41,10 @@ class BaseFile:
                                 sys.exit()
                         elif event.type == pygame.KEYDOWN:
                                 if event.key == pygame.K_RIGHT:
-                                        self.character.rect.x +=1
-                        elif event.type == pygame.KEYDOWN:
-                                if event.key == pygame.K_LEFT:
-                                        self.character.rect.x -= 1
-                        elif event.type == pygame.KEYDOWN:
-                                if event.key == pygame.K_UP:
-                                        self.character.rect.y += 1
-                        elif event.type == pygame.KEYDOWN:
-                                if event.key == pygame.K_DOWN:
-                                        self.character.rect.y += 1
+                                        self.character.moving_right = True
+                        elif event.type == pygame.KEYUP:
+                                if event.key == pygame.K_RIGHT:
+                                        self.character.moving_right = False
 
         def _update_screen(self):
                 """Update images on the screen, and flip to the new screen"""
