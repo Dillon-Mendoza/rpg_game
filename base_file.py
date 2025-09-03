@@ -17,9 +17,6 @@ class BaseFile:
                         self.settings.screen_width, self.settings.screen_height))
                 pygame.display.set_caption("Aeloria")
 
-                # Set the background color
-                self.bg_color = (30, 30, 30)
-
                 # Load the spritesheet using paths from settings
                 self.spritesheet = SpriteSheet(self.settings.spritesheet_path, self.settings.player_config)
 
