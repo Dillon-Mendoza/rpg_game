@@ -51,11 +51,13 @@ class BaseFile:
                         elif  event.key == pygame.K_LEFT:
                                 self.character.moving_left = True
                 
-                        elif event.type == pygame.KEYDOWN:
+                        if event.type == pygame.KEYDOWN:
                                 if event.key == pygame.K_UP:
                                         self.character.moving_up = True
                                 elif event.key == pygame.K_DOWN:
                                         self.character.moving_down = True
+                                elif event.key == pygame.K_ESCAPE:
+                                        sys.exit()
 
         def _check_keyup_events(self, event):
                 if event.type == pygame.KEYUP:
