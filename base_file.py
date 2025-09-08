@@ -38,28 +38,38 @@ class BaseFile:
                         if event.type == pygame.QUIT:
                                 sys.exit()
                         elif event.type == pygame.KEYDOWN:
-                                if event.key == pygame.K_RIGHT:
-                                        self.character.moving_right = True
-                                elif  event.key == pygame.K_LEFT:
-                                        self.character.moving_left = True
-
+                                self._check_keydown_events(event)
                         elif event.type == pygame.KEYUP:
-                                if event.key == pygame.K_RIGHT:
-                                        self.character.moving_right = False
-                                elif event.key == pygame.K_LEFT:
-                                        self.character.moving_left = False
+                                self._check_keyup_events(event)
 
+
+        def _check_keydown_events(self, event):
+                """Respond to keypresses"""
+                if event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_RIGHT:
+                                self.character.moving_right = True
+                        elif  event.key == pygame.K_LEFT:
+                                self.character.moving_left = True
+                
                         elif event.type == pygame.KEYDOWN:
                                 if event.key == pygame.K_UP:
                                         self.character.moving_up = True
                                 elif event.key == pygame.K_DOWN:
                                         self.character.moving_down = True
 
+        def _check_keyup_events(self, event):
+                if event.type == pygame.KEYUP:
+                        if event.key == pygame.K_RIGHT:
+                                self.character.moving_right = False
+                        elif event.key == pygame.K_LEFT:
+                                self.character.moving_left = False
+
                         elif event.type == pygame.KEYUP:
                                 if event.key == pygame.K_UP:
                                         self.character.moving_up = False
                                 elif event.key == pygame.K_DOWN:
                                         self.character.moving_down = False
+
 
         def _update_screen(self):
                 """Update images on the screen, and flip to the new screen"""

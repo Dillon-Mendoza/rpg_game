@@ -10,7 +10,7 @@ class Settings:
                 # Player settings
                 self.player_start_x = 400
                 self.player_start_y = 300
-                self.player_speed = 2.5
+                self.player_speed = 10.0 #Original is 2.5
                 self.player_animation_speed = 0.15
 
                 # File paths

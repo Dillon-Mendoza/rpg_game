@@ -30,7 +30,7 @@ class Character(pygame.sprite.Sprite):
         self.frame_index = 0
         if self.animations["idle"]:
             self.image = self.animations[self.current_animation][self.frame_index]
-            self.rect = self.image.get_rect(midbottom=self.screen_rect.midbottom)
+            self.rect = self.image.get_rect(center=self.screen_rect.center)
         else:
             self.image = pygame.Surface((32, 32))  # Default placeholder
             self.image.fill((255, 0, 255))  # Magenta for visibility
@@ -43,13 +43,13 @@ class Character(pygame.sprite.Sprite):
 
     def update(self, keys):
         """Update character position and animation."""
-        if keys[pygame.K_RIGHT]:
+        if self.moving_right and self.rect.right < self.screen_rect.right:
             self.rect.x += self.speed
-        if keys[pygame.K_LEFT]:
+        if self.moving_left and self.rect.left > 0:
             self.rect.x -= self.speed
-        if keys[pygame.K_UP]:
+        if self.moving_up and self.rect.top > 0:
             self.rect.y -= self.speed
-        if keys[pygame.K_DOWN]:
+        if self.moving_down and self.rect.bottom < self.screen_rect.bottom:
             self.rect.y += self.speed
 
         # Set animation state
