@@ -23,7 +23,7 @@ class BaseFile:
                 # Create an instance of the character, passing settings and spritesheet
                 self.character = Character(self, self.settings, self.spritesheet)
 
-                self.background_music = pygame.mixer.Sound('sounds/main_music.wav')
+                self.background_music = pygame.mixer.Sound('sounds/main_menu.wav')
 
         def run_game(self):
                 """Start the main loop for the game"""
