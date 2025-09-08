@@ -23,10 +23,14 @@ class BaseFile:
                 # Create an instance of the character, passing settings and spritesheet
                 self.character = Character(self, self.settings, self.spritesheet)
 
+                self.background_music = pygame.mixer.Sound('sounds/main_music.wav')
+
         def run_game(self):
                 """Start the main loop for the game"""
+                self.background_music.play(loops=1000)
                 while True:
                         self._check_events()
+                        self.background_music.set_volume(0.3)
                         keys = pygame.key.get_pressed()
                         self.character.update(keys)
                         self._update_screen()
