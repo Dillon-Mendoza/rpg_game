@@ -3,6 +3,7 @@ import pygame
 from settings import Settings
 from character import Character
 from spritesheet import SpriteSheet
+from button import Button
 
 class BaseFile:
         """Overall class to manage game assets and behavior."""
@@ -24,15 +25,21 @@ class BaseFile:
                 self.character = Character(self, self.settings, self.spritesheet)
 
                 self.background_music = pygame.mixer.Sound('sounds/main_menu.wav')
-
+                # Start game in an active state                
+                self.game_active = False
+                # Make the Play button
+                self.play_button = Button(self, "Play")
         def run_game(self):
                 """Start the main loop for the game"""
                 self.background_music.play(loops=1000)
+                self.background_music.set_volume(0.3)
                 while True:
                         self._check_events()
-                        self.background_music.set_volume(0.3)
-                        keys = pygame.key.get_pressed()
-                        self.character.update(keys)
+
+                        if self.game_active:
+                                keys = pygame.key.get_pressed()
+                                self.character.update(keys)
+                        
                         self._update_screen()
                         self.clock.tick(60)
 
@@ -81,6 +88,10 @@ class BaseFile:
                 """Update images on the screen, and flip to the new screen"""
                 self.screen.fill(self.settings.bg_color)
                 self.character.blitme()
+
+                # Draw the play button if the game is inactive
+                if not self.game_active:
+                        self.play_button.draw_button()
 
                 pygame.display.flip()
 

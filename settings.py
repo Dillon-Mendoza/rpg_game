@@ -5,7 +5,7 @@ class Settings:
                 # Screen settings
                 self.screen_width = 800
                 self.screen_height = 600
-                self.bg_color = (30, 30, 30)
+                self.bg_color = (30, 30, 30)  #r: 34, g: 139, b: 34 (Forest Green)
 
                 # Player settings
                 self.player_start_x = 400
