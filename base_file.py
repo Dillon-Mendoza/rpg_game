@@ -29,6 +29,8 @@ class BaseFile:
                 self.game_active = False
                 # Make the Play button
                 self.play_button = Button(self, "Play")
+                # Make the Exit button
+                self.exit_button = Button(self, "Exit")
         def run_game(self):
                 """Start the main loop for the game"""
                 self.background_music.play(loops=1000)
@@ -52,6 +54,21 @@ class BaseFile:
                                 self._check_keydown_events(event)
                         elif event.type == pygame.KEYUP:
                                 self._check_keyup_events(event)
+                        elif event.type == pygame.MOUSEBUTTONDOWN:
+                                mouse_pos = pygame.mouse.get_pos()
+                                self._check_play_button(mouse_pos)
+                        elif event.type == pygame.MOUSEBUTTONDOWN:
+                                mouse_pos = pygame.mouse.get_pos()
+                                self._check_exit_button(mouse_pos)
+
+        def _check_play_button(self, mouse_pos):
+                """Start a new game when the player clicks Play"""
+                if self.play_button.rect.collidepoint(mouse_pos):
+                        self.game_active = True
+
+        def _check_exit_button(self,mouse_pos):
+                if self.exit_button.rect.collidepoint(mouse_pos):
+                        sys.exit()
 
 
         def _check_keydown_events(self, event):
@@ -92,6 +109,7 @@ class BaseFile:
                 # Draw the play button if the game is inactive
                 if not self.game_active:
                         self.play_button.draw_button()
+                        self.exit_button.draw_button()
 
                 pygame.display.flip()
 
