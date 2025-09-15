@@ -3,7 +3,8 @@ import pygame
 from settings import Settings
 from character import Character
 from spritesheet import SpriteSheet
-from button import Button
+#from button import Button
+from main_menu import MainMenu
 
 class BaseFile:
         """Overall class to manage game assets and behavior."""
@@ -27,10 +28,16 @@ class BaseFile:
                 self.background_music = pygame.mixer.Sound('sounds/main_menu.wav')
                 # Start game in an active state                
                 self.game_active = False
+                self.curr_menu = MainMenu(self)
+                self.DOWN_KEY = False
+                self.UP_KEY = False
+                self.START_KEY = False
                 # Make the Play button
-                self.play_button = Button(self, "Play")
+                #self.play_button = Button(self, "Play")
                 # Make the Exit button
-                self.exit_button = Button(self, "Exit")
+                #self.exit_button = Button(self, "Exit")
+
+                
         def run_game(self):
                 """Start the main loop for the game"""
                 self.background_music.play(loops=1000)
@@ -41,8 +48,10 @@ class BaseFile:
                         if self.game_active:
                                 keys = pygame.key.get_pressed()
                                 self.character.update(keys)
+                                self._update_screen()
+                        else:
+                                self.curr_menu.display_menu()
                         
-                        self._update_screen()
                         self.clock.tick(60)
 
         def _check_events(self):
@@ -54,12 +63,12 @@ class BaseFile:
                                 self._check_keydown_events(event)
                         elif event.type == pygame.KEYUP:
                                 self._check_keyup_events(event)
-                        elif event.type == pygame.MOUSEBUTTONDOWN:
-                                mouse_pos = pygame.mouse.get_pos()
-                                self._check_play_button(mouse_pos)
-                        elif event.type == pygame.MOUSEBUTTONDOWN:
-                                mouse_pos = pygame.mouse.get_pos()
-                                self._check_exit_button(mouse_pos)
+                        #elif event.type == pygame.MOUSEBUTTONDOWN:
+                                #mouse_pos = pygame.mouse.get_pos()
+                                #self._check_play_button(mouse_pos)
+                        #elif event.type == pygame.MOUSEBUTTONDOWN:
+                                #mouse_pos = pygame.mouse.get_pos()
+                                #self._check_exit_button(mouse_pos)
 
         def _check_play_button(self, mouse_pos):
                 """Start a new game when the player clicks Play"""
@@ -73,6 +82,14 @@ class BaseFile:
 
         def _check_keydown_events(self, event):
                 """Respond to keypresses"""
+
+                if event.key == pygame.K_DOWN:
+                        self.DOWN_KEY = True
+                if event.key == pygame.K_UP:
+                        self.UP_KEY = True
+                if event.key == pygame.K_RETURN:
+                        self.START_KEY = True
+
                 if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_RIGHT:
                                 self.character.moving_right = True
@@ -88,6 +105,14 @@ class BaseFile:
                                         sys.exit()
 
         def _check_keyup_events(self, event):
+                """Respond to key releases"""
+                if event.key == pygame.K_DOWN:
+                        self.DOWN_KEY = False
+                if event.key == pygame.K_UP:
+                        self.UP_KEY = False
+                if event.key == pygame.K_RETURN:
+                        self.START_KEY = False
+
                 if event.type == pygame.KEYUP:
                         if event.key == pygame.K_RIGHT:
                                 self.character.moving_right = False
@@ -107,9 +132,9 @@ class BaseFile:
                 self.character.blitme()
 
                 # Draw the play button if the game is inactive
-                if not self.game_active:
-                        self.play_button.draw_button()
-                        self.exit_button.draw_button()
+                #if not self.game_active:
+                        #self.play_button.draw_button()
+                        #self.exit_button.draw_button()
 
                 pygame.display.flip()
 
